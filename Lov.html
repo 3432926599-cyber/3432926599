@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loveillegirl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8d7ff, #ffd1dc, #e0c3fc);
+            color: #5a3d5c;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 导航栏样式 - 修复颜色 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #e75480;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 30px;
+            color: #e75480;
+        }
+
+        .logo span {
+            color: #b76e79;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #e75480;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        nav ul li a:hover {
+            background: rgba(231, 84, 128, 0.1);
+            color: #b76e79;
+        }
+
+        /* 主内容区域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            color: #e75480;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease;
+            color: #5a3d5c;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px 30px;
+            border-radius: 30px;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .scroll-down i {
+            font-size: 2rem;
+            color: #e75480;
+        }
+
+        /* 图片展示部分 */
+        .gallery {
+            padding: 100px 0;
+        }
+
+        .gallery-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 150px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+            position: relative;
+        }
+
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .gallery-img {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            border: 8px solid white;
+            position: relative;
+        }
+
+        .gallery-img::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 2px dashed #e75480;
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.03) rotate(-2deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-content {
+            flex: 1;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            margin: 0 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #e75480;
+            display: flex;
+            align-items: center;
+        }
+
+        .gallery-content h2 i {
+            margin-right: 15px;
+            font-size: 2rem;
+            color: #b76e79;
+        }
+
+        .gallery-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #5a3d5c;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-content h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #e75480;
+        }
+
+        .footer-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            color: #5a3d5c;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            color: #e75480;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-icons a:hover {
+            background: #e75480;
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #b76e79;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .gallery-item,
+            .gallery-item:nth-child(even) {
+                flex-direction: column;
+            }
+            
+            .gallery-content {
+                margin: 30px 0 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            nav ul li {
+                margin-left: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+                padding: 12px 20px;
+            }
+            
+            .gallery-content {
+                padding: 25px;
+            }
+            
+            .gallery-content h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav ul li a {
+                font-size: 16px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <a href="#" class="logo"><i class="fas fa-paint-brush"></i>Love<span>album</span></a>
+        <nav>
+            <ul>
+                <li><a href="#">Menu</a></li>
+                <li><a href="#gallery">Photos</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main>
+        <section class="hero">
+            <h1>SupersupErChik&illigril</h1>
+            <p>超级棒棒鸡与小渊渊的恋爱相册</p>
+            <div class="scroll-down">
+                <i class="fas fa-heart"></i>
+            </div>
+        </section>
+
+        <!-- 图片展示区域 -->
+        <section id="gallery" class="gallery container">
+
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <img src="picture/bar.jpg" alt="bar">
+                </div>
+                <div class="gallery-content">
+                    <h2><i class="fas fa-city"></i>2025.8.11 球馆对面小酒吧</h2>
+                    <p>我终于敢看她一眼，趁她喝酒的时候。墙面反射的紫光与台上朦胧的烟雾混成一团虚影，但她眸中的羞意化作溪水，仿佛下一秒就要流出来一般。
+                        <br>我看一眼手机桌面的时钟，心下知道今晚的高铁就像即将离弦的箭矢待发，越来越近，迫在眉睫。
+                        <br>我看向我面前的酒杯，在她即将转头的上一秒。眉眼低垂。我是一个理智的人，我在心里暗暗地想。我现在应该做的是起身离开这里，然后坐上一辆开往火车站的出租车，在她即将看不到我的那个时候向她挥手，此行山高又路远，山水有相逢，我们再会。我在心中默念，人生不相见，动如参与商，哪怕我明知道身旁飘来的她身上淡淡的香味早已在我的心尖上走了一遭，把一个雄鹰般的男人之肝胆化作柔肠。
+                        <br>今晚的高铁迫在眉睫。
+                    </p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <img src="picture/pindou.jpg" alt="pindou">
+                </div>
+                <div class="gallery-content">
+                    <h2><i class="fas fa-mountain"></i>2025.10.1 拼豆（好可爱好漂亮腻）</h2>
+                    <p>愿读库订阅的包裹永远比焦虑早到一步，阳台的植栽在遗忘时反而蓬勃；愿地铁让座给你的中学生眼神清澈，便利店加热饭团的小哥多给你一包海苔。
+                        当你某天在陌生城市迷路，会偶遇高中时最爱的那款樱花香；当你在教室头脑空白的三秒钟，窗外的云恰好拼成熟悉的猫咪；当你终于学会对某些人与事祛魅，旧书里会掉出去年写下的某个巧妙的时间段写下的目标和诺言。
+                        <br>愿强运伴随着你 
+                        </p>
+                    <p>复旦大学王教授曾经说过一句名言，四十岁不信命，悟性太差。
+                        而我要说 尤其是经过了疫情三年的人，如果对于世事无常没有一点感受的话，那都不是笨了，是蠢。
+                        我相信在不为人知的地方，你也有过不顺遂。生活一波三折，太寻常。我要告诉你的方法论是，在当你觉得你已经努力够了的时候，学会止于至善，大胆地把剩下的交给运气！
+                        <br>世间的一切要是都能够靠努力解决，那是不是有点太无聊了？！
+                        你不缺努力和智慧，那就让我祝福你再幸运一点,心想事成！
+                        </p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <img src="picture/xiaoye.jpg" alt="xiaoye">
+                </div>
+                <div class="gallery-content">
+                    <h2><i class="fas fa-umbrella-beach"></i>2025.10.7 关山大道</h2>
+                    <p></p>
+                    <p>好书只胜一回读。虽然我读的书不多，但这一次又一次的分别却要我明白一个深刻的道理，正是因为明白了这个道理，我囫囵读下上一本书的我，发觉自己读的太凶太快太急的我，就更会把下一本书慢慢读，细细品，愈读愈珍惜，愈读愈觉得当下珍贵。
+                        <br>逝者如川。
+                        <br>这个道理只有四个字。
+                        <br>是不是世间万物都逃不过次数的枷锁？一台洗衣机大概只能运转五千次，一支圆珠笔写到墨尽大概能划了三公里，手机开机次数藏在芯片里，而人的心跳，一生大概要跳二十五亿次。
+                        <br>我知道，什么都是有次数的。
+                        </p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-img">
+                    <img src="picture/bye.jpg" alt="bye">
+                </div>
+                <div class="gallery-content">
+                    <h2><i class="fas fa-tree"></i>2025.10.9 武汉火车站</h2>
+                    <p>是不是人这一生，真的只能说一千次“我爱你”？所以有些人再也不肯轻易说出口。
+                        <br>是不是人这一生，真的只能流一千次眼泪？所以后来哪怕经历再心碎的离别，也流不出泪来。
+                        <br>拥抱有次数吗？那剩下的，我只想和你分享。
+                        <br>失眠有次数吗？那我是不是快要熬到尽头了。
+                        <br>清晨醒来对你的思念也有次数吗？我好想知道还剩多少次。
+                        <br>离开有次数吗？
+                        <br>幸福呢？
+                        <br>呃
+                        </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>谢谢泥,我最爱的小渊渊</h3>
+            <p>如果想我了，就给我打电话吧，我的电话号码是13430347067！</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-weixin"></i></a>
+            </div>
+            <p class="copyright">© 2023 恋爱相册. 超级棒棒鸡保留所有权利</p>
+        </div>
+    </footer>
+
+    <script>
+        // 滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            // 滚动时检查元素是否进入视口
+            function checkVisibility() {
+                galleryItems.forEach(item => {
+                    const rect = item.getBoundingClientRect();
+                    const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom >= 0;
+                    
+                    if (isVisible) {
+                        item.classList.add('visible');
+                    }
+                });
+            }
+            
+            // 初始检查
+            checkVisibility();
+            
+            // 滚动事件监听
+            window.addEventListener('scroll', checkVisibility);
+            
+            // 平滑滚动导航
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
